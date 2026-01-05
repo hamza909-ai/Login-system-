@@ -6,27 +6,30 @@ const users = [
     { email: "user5@gmail.com", password: "test@123" }
 ];
 
-function login() {
-    const inputEmail = document.getElementById("email").value;
-    const inputPassword = document.getElementById("password").value;
+function login(event) {
+    event.preventDefault(); // ⛔ refresh stop
 
-    let isLogin = false;
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const result = document.getElementById("result");
+
+    let matched = false;
 
     for (let i = 0; i < users.length; i++) {
-        if (
-            users[i].email === inputEmail &&
-            users[i].password === inputPassword
-        ) {
-            isLogin = true;
+        if (users[i].email === email && users[i].password === password) {
+            matched = true;
             break;
         }
     }
 
-    if (isLogin) {
-        document.getElementById("result").innerHTML = "✅ Login Successful";
-        document.getElementById("result").style.color = "green";
+    if (matched) {
+        result.innerText = "✅ Login Successful";
+        result.style.color = "green";
     } else {
-        document.getElementById("result").innerHTML = "❌ Invalid Email or Password";
-        document.getElementById("result").style.color = "red";
+        result.innerText = " ❌ Email not found ";
+       //result.innerText = "❌ Invalid Email or Password";
+        result.style.color = "red";
     }
+
+    return false; // ⛔ extra safety
 }
